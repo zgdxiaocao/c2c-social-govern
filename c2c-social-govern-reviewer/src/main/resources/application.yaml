@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: c2c-social-govern-reviewer
+  # 数据源配置
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.10.59:3306/csc?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: Cloud@1234
+    type: com.alibaba.druid.pool.DruidDataSource
+    # 要在这里直接配置，maven依赖中配置spring-boot-starter-druid.而不是直接配置druid
+    druid:
+      initial-size: 1
+      min-idle: 1
+      max-active: 50
+      max-wait: 60000
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 1 From DUAL
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      filters: stat,wall,log4j
+      connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.10.59:8848
+        namespace: dev
+
+dubbo:
+  scan:
+    base-packages: com.zhss.c2c.social.govern.reviewer
+  protocol:
+    name: dubbo
+    port: 20990
+  registry:
+    address: spring-cloud://192.168.10.59:8848

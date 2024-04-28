@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: c2c-social-govern-report
+  # 数据源配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.10.59:3306/csc?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: Cloud@1234
+    type: com.alibaba.druid.pool.DruidDataSource
+    # 要在这里直接配置，maven依赖中配置spring-boot-starter-druid
+    druid:
+      initial-size: 5
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.10.59:8848
+        namespace: dev
+
+dubbo:
+  scan:
+    base-packages: com.zhss.c2c.social.govern.report
+  cloud:
+    subscribed-services: c2c-social-govern-reviewer,c2c-social-govern-reward
+  registry:
+    address: spring-cloud://192.168.10.59:8848
